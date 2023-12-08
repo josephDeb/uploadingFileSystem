@@ -1,5 +1,4 @@
-
-import path from 'path';
+import path from 'path'
 import asyncHandler from '../middlewares/asyncHandler.js';
 import items from '../models/items.js';
 

@@ -5,12 +5,13 @@ import connectDB from './config/db.js';
 
 import itemsRouter from './routes/items.js'
 
-dotenv.config();
+dotenv.config()
 connectDB()
+
 
 const app = express()
 
-const port = process.env.PORT || 8000;
+const port =  8000;
 
 app.use(express.json())
 app.use(cors());
