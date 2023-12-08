@@ -1,7 +1,7 @@
 
 import path from 'path';
 import asyncHandler from '../middlewares/asyncHandler.js';
-import Items from '../models/items.js';
+import items from '../models/items.js';
 
 const getItem = async (req, res) => {
     try {
@@ -34,16 +34,33 @@ const addItem = asyncHandler(async (req, res) => {
  }
 })
 
-const downloadItem = asyncWrapper(async (req, res) => {
-    const { id } = req.params;
-    const item = await Items.findById(id);
-    if (!item) {
-      return next(new Error("No item found"));
+const getSingleItem = asyncHandler(async (req, res) => {
+    try {
+        const {id} = req.params;
+        const item = await items.findById(id)
+        if(!item) {
+            return res.status(404).json({Status:false, Error: "NOt found"})
+        }
+        
+        return res.status(200).json({Status: true, item})
+    } catch (error) {
+        console.log(error)
     }
-    const file = item.file;
-    const filePath = path.join(__dirname, `../${file}`);
-    res.download(filePath);
-  });
-  
+})
 
-export {getItem, addItem, downloadItem}
+const downloadItem = asyncHandler(async (req, res) => {
+    try {
+        const {id} = req.params;
+        const item = await items.findById(id)
+        if(!item) {
+            throw new Error("Not found")
+        }
+        const file = req.file;
+        const filePath = path.join(__dirname, `..${file}`)
+        return res.download(filePath)
+    } catch (error) {
+        return res.status(500).json("ERROR")
+    }
+})
+
+export {getItem, addItem, downloadItem, getSingleItem}

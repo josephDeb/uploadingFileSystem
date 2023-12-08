@@ -4,7 +4,7 @@ import multer from 'multer'
 import path from 'path'
 
 
-import {addItem, getItem, downloadItem} from '../controller/items.js'
+import {addItem, getItem, downloadItem, getSingleItem} from '../controller/items.js'
 const router = express.Router()
 
 const storage = multer.diskStorage({
@@ -38,7 +38,7 @@ const storage = multer.diskStorage({
 
 
 router.route("/").get(getItem).post(upload.single('file'), addItem )
-
+router.route("/:id").get(getSingleItem)
 router.route('/download/:id').get(downloadItem)
 
 export default router
