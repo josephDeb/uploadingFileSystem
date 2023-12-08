@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 mongoose.set("strictQuery", false)
 
-const uploadingSchema = new mongoose.Schema({
+const itemsSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
@@ -10,10 +10,10 @@ const uploadingSchema = new mongoose.Schema({
         maxLength: 28,
         unique: true
     },
-    image: {
+    file: {
         type: String
     }
 })
 
 
-export default mongoose.model("Upload", uploadingSchema)
+export default mongoose.model("Items", itemsSchema)
